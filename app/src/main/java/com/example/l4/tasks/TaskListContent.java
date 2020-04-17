@@ -1,5 +1,8 @@
 package com.example.l4.tasks;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +14,63 @@ public class TaskListContent {
     public static final Map<String, Task> ITEM_MAP = new HashMap<String, Task>();
 
     private static final int COUNT = 5;
+
+    public static class Task implements Parcelable {
+        public final String id;
+        public final String title;
+        public final String details;
+        public final String picPath;
+
+        public Task(String id, String content, String details) {
+            this.id = id;
+            this.title = content;
+            this.details = details;
+            this.picPath = "";
+        }
+        public Task(String id, String content, String details, String picPath) {
+            this.id = id;
+            this.title = content;
+            this.details = details;
+            this.picPath = picPath;
+        }
+
+        protected Task(Parcel in) {
+            id = in.readString();
+            title = in.readString();
+            details = in.readString();
+            picPath = in.readString();
+        }
+
+        public static final Creator<Task> CREATOR = new Creator<Task>() {
+            @Override
+            public Task createFromParcel(Parcel in) {
+                return new Task(in);
+            }
+
+            @Override
+            public Task[] newArray(int size) {
+                return new Task[size];
+            }
+        };
+
+        @Override
+        public String toString() {
+            return title;
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(id);
+            dest.writeString(title);
+            dest.writeString(details);
+            dest.writeString(picPath);
+        }
+    }
 
     static {
         // Add some sample items.
@@ -37,28 +97,5 @@ public class TaskListContent {
         return builder.toString();
     }
 
-    public static class Task {
-        public final String id;
-        public final String title;
-        public final String details;
-        public final String picPath;
 
-        public Task(String id, String content, String details) {
-            this.id = id;
-            this.title = content;
-            this.details = details;
-            this.picPath = "";
-        }
-        public Task(String id, String content, String details, String picPath) {
-            this.id = id;
-            this.title = content;
-            this.details = details;
-            this.picPath = picPath;
-        }
-
-        @Override
-        public String toString() {
-            return title;
-        }
-    }
 }

@@ -3,15 +3,19 @@ package com.example.l4;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.l4.tasks.TaskListContent;
 
 public class MainActivity extends AppCompatActivity  implements TaskFragment.OnListFragmentInteractionListener{
+
+    public static final String taskExtra = "taskExtra";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,9 +55,16 @@ public class MainActivity extends AppCompatActivity  implements TaskFragment.OnL
 
     }
 
+    private void StartSecondActivity(TaskListContent.Task task, int position) {
+        Intent intent = new Intent(this, TaskInfoActivity.class);
+        intent.putExtra(taskExtra, task);
+        startActivity(intent);
+    }
+
     @Override
     public void onListFragmentClickInteraction(TaskListContent.Task task, int position) {
-
+        Toast.makeText(this, getString(R.string.item_selected_msg), Toast.LENGTH_SHORT).show();
+        StartSecondActivity(task, position);
     }
 
     @Override
