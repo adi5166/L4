@@ -44,7 +44,6 @@ public class TaskInfoFragment extends Fragment {
 
     public void displayTask(TaskListContent.Task task) {
         FragmentActivity activity = getActivity();
-
         TextView taskInfoTitle = activity.findViewById(R.id.taskInfoTitle);
         TextView taskInfoDescription = activity.findViewById(R.id.taskDescription);
         ImageView taskInfoImage = activity.findViewById(R.id.taskInfoImage);
